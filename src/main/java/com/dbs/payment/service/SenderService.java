@@ -48,4 +48,26 @@ public class SenderService {
 		}
 		return res;
 	}
+	
+	public Boolean checkAmount(String custId, double amount) {
+		boolean res = false;
+		double transferFee = (0.25*amount)/100;
+		try {
+			Sender sender = senderRepo.findById(custId).orElse(new Sender());
+			if(sender.getClearBalance() >= transferFee + amount) {
+				res = true;
+			}
+			else {
+				if(sender.getOverDraft() == "yes") {
+					res = true;
+				} else {
+					res = false;
+				}
+			}
+		} catch(Exception e) {
+			res = false;
+			e.printStackTrace();
+		}
+		return res;
+	}
 }

@@ -3,6 +3,7 @@ package com.dbs.payment.controller;
 import java.text.ParseException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dbs.payment.model.Sender;
 import com.dbs.payment.service.SenderService;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class SenderController {
 	
@@ -22,6 +24,7 @@ public class SenderController {
 		return senderService.validateDayName(date);
 	}
 	
+	
 	@GetMapping("/getSender")
 	public Sender getSender(@RequestParam String custId) {
 		return senderService.getSender(custId);
@@ -31,6 +34,12 @@ public class SenderController {
 	public String updateClearBalance(@RequestParam String custId, double balance) {
 		return senderService.updateClearBalance(custId, balance);
 	}
+	
+	@GetMapping("/checkAmount")
+	public Boolean checkAmount(@RequestParam String custId, double amount) {
+		return senderService.checkAmount(custId, amount);
+	}
+	
 	
 
 }
